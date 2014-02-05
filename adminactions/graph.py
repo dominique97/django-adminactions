@@ -77,6 +77,9 @@ def graph_queryset(modeladmin, request, queryset):
                 if isinstance(field, ForeignKey):
                     data_labels = []
                     for value, cnt in cc:
+                        # dmk 2/5/14 added check for None
+                        if value == None: data_labels.append('No value')
+                        else: data_labels.append(str(field.rel.to.objects.get(pk=value)))                        
                         data_labels.append(str(field.rel.to.objects.get(pk=value)))
                 elif isinstance(field, BooleanField):
                     data_labels = [str(l) for l, v in cc]
