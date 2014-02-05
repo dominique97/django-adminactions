@@ -87,7 +87,12 @@ def graph_queryset(modeladmin, request, queryset):
                 else:
                     data_labels = [str(l) for l, v in cc]
                 data = [v for l, v in cc]
-
+                
+                 """ dmk 2/5/14  add any blank fields as no-value entry """
+                if sum(data) < queryset.count():
+                    data_labels.append('No value')
+                    data.append(queryset.count() - sum(data))
+                    
                 if graph_type == 'BarChart':
                     table = [[10, 20]]
                     extra = """{seriesDefaults:{renderer:$.jqplot.BarRenderer,
